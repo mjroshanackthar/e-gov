@@ -16,7 +16,7 @@ We only provide security updates for actively maintained versions of the project
 If you discover a security vulnerability, please **do not open a public issue**.  
 Instead, report it directly and responsibly:
 
-1. Email us at **[security@yourdomain.com]** (replace with your contact).
+1. Email us at **[belliaspan@gmail.com]**.
 2. Include details to help us reproduce the issue:
    - A clear description of the vulnerability.
    - Steps to reproduce.

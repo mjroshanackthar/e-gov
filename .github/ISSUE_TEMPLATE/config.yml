@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security Report
+    url: https://github.com/panagiotisbellias/e-gov/security/policy
+    about: Please report security vulnerabilities via our SECURITY.md instructions.
