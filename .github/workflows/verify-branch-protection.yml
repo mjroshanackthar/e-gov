@@ -1,13 +1,14 @@
 name: Verify Branch Protection Rules
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: # allows manual trigger
   schedule:
-    - cron: "0 6 * * 1" # Every Monday at 06:00 UTC
+    - cron: "0 6 * * 1" # every Monday at 06:00 UTC
 
 env:
   TARGET_BRANCHES: "master development"
   REQUIRED_STATUS: "CI - Ant Build & Checks"
+  ISSUE_TITLE: "Branch Protection Policy Violation Detected"
 
 jobs:
   verify-protection:
@@ -16,6 +17,7 @@ jobs:
 
     permissions:
       contents: read
+      issues: write
       actions: read
       security-events: write
 
@@ -24,60 +26,79 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Verify branch protections
+        id: verify
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -e
           echo "🔍 Checking branch protection rules..."
+          ERRORS=""
 
           for BRANCH in $TARGET_BRANCHES; do
             echo ""
             echo "=== Checking $BRANCH branch ==="
 
-            # Fetch branch protection settings
             PROTECTION=$(gh api repos/${{ github.repository }}/branches/$BRANCH/protection 2>/dev/null || echo "{}")
 
             if [[ "$PROTECTION" == "{}" ]]; then
-              echo "❌ Branch '$BRANCH' has no protection rules configured."
-              exit 1
+              ERRORS+="❌ Branch '$BRANCH' has no protection rules configured.\n"
+              continue
             fi
 
-            # Check for required pull request reviews
+            # Require pull request reviews
             if [[ $(echo "$PROTECTION" | jq '.required_pull_request_reviews') == "null" ]]; then
-              echo "❌ Missing pull request review requirement on '$BRANCH'"
-              exit 1
+              ERRORS+="❌ Missing pull request review requirement on '$BRANCH'\n"
             fi
 
-            # Check number of approvals required
+            # Require at least one approving review
             APPROVALS=$(echo "$PROTECTION" | jq '.required_pull_request_reviews.required_approving_review_count')
             if [[ "$APPROVALS" -lt 1 ]]; then
-              echo "❌ Expected at least 1 approving review for '$BRANCH', got $APPROVALS"
-              exit 1
+              ERRORS+="❌ Expected ≥1 approving review for '$BRANCH', got $APPROVALS\n"
             fi
 
-            # Check required status checks
+            # Require specific status check
             STATUS=$(echo "$PROTECTION" | jq -r '.required_status_checks.contexts[]?' | grep -F "$REQUIRED_STATUS" || true)
             if [[ -z "$STATUS" ]]; then
-              echo "❌ Required status check '$REQUIRED_STATUS' missing on '$BRANCH'"
-              exit 1
+              ERRORS+="❌ Required status check '$REQUIRED_STATUS' missing on '$BRANCH'\n"
             fi
 
-            # Check force pushes
+            # Disallow force pushes
             FORCE_PUSH=$(echo "$PROTECTION" | jq '.allow_force_pushes.enabled')
             if [[ "$FORCE_PUSH" == "true" ]]; then
-              echo "❌ Force pushes are allowed on '$BRANCH'"
-              exit 1
+              ERRORS+="❌ Force pushes allowed on '$BRANCH'\n"
             fi
 
-            # Check deletions
+            # Disallow deletions
             ALLOW_DELETE=$(echo "$PROTECTION" | jq '.allow_deletions.enabled')
             if [[ "$ALLOW_DELETE" == "true" ]]; then
-              echo "❌ Branch deletions are allowed on '$BRANCH'"
-              exit 1
+              ERRORS+="❌ Branch deletions allowed on '$BRANCH'\n"
             fi
 
-            echo "✅ Branch '$BRANCH' meets protection policy."
+            if [[ -z "$ERRORS" ]]; then
+              echo "✅ Branch '$BRANCH' meets protection policy."
+            fi
           done
 
-          echo ""
-          echo "🎉 All checked branches comply with branch protection standards."
+          if [[ -n "$ERRORS" ]]; then
+            echo -e "🚨 Violations found:\n$ERRORS"
+            echo "errors<<EOF" >> $GITHUB_OUTPUT
+            echo -e "$ERRORS" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+            exit 1
+          else
+            echo "🎉 All branches comply with protection policy."
+          fi
+
+      - name: Create issue if violations found
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "🪄 Creating issue for policy violations..."
+          BODY="The following branch protection violations were detected:\n\n${{ steps.verify.outputs.errors }}\n\nPlease review repository settings."
+          gh issue create \
+            --title "${{ env.ISSUE_TITLE }}" \
+            --body "$BODY" \
+            --label "ci" \
+            --label "branch-protection" \
+            || echo "⚠️ Issue may already exist."
