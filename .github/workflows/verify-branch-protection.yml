@@ -2,8 +2,8 @@ name: Verify Branch Protection Rules
 
 on:
   workflow_dispatch: # allows manual trigger
-  schedule:
-    - cron: "0 6 * * 1" # every Monday at 06:00 UTC
+  # schedule:
+    # - cron: "0 6 * * 1" # every Monday at 06:00 UTC
 
 env:
   TARGET_BRANCHES: "master development"
