@@ -7,7 +7,7 @@ on:
 
 env:
   TARGET_BRANCHES: "master development"
-  REQUIRED_STATUS: "CI - Ant Build & Checks"
+  REQUIRED_STATUS: "Build and Test"
   ISSUE_TITLE: "Branch Protection Policy Violation Detected"
 
 jobs:
@@ -46,12 +46,13 @@ jobs:
             fi
 
             # Require pull request reviews
-            if [[ $(echo "$PROTECTION" | jq '.required_pull_request_reviews') == "null" ]]; then
+            REVIEWS=$(echo "$PROTECTION" | jq -r '.required_pull_request_reviews')
+            if [[ -z "$REVIEWS" || "$REVIEWS" == "null" ]]; then
               ERRORS+="❌ Missing pull request review requirement on '$BRANCH'\n"
             fi
 
             # Require at least one approving review
-            APPROVALS=$(echo "$PROTECTION" | jq '.required_pull_request_reviews.required_approving_review_count')
+            APPROVALS=$(echo "$PROTECTION" | jq -r '.required_pull_request_reviews.required_approving_review_count // 0')
             if [[ "$APPROVALS" -lt 1 ]]; then
               ERRORS+="❌ Expected ≥1 approving review for '$BRANCH', got $APPROVALS\n"
             fi
