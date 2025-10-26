@@ -1,0 +1,83 @@
+name: Verify Branch Protection Rules
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * 1" # Every Monday at 06:00 UTC
+
+env:
+  TARGET_BRANCHES: "master development"
+  REQUIRED_STATUS: "CI - Ant Build & Checks"
+
+jobs:
+  verify-protection:
+    name: Verify Branch Protection
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      actions: read
+      security-events: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Verify branch protections
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          echo "🔍 Checking branch protection rules..."
+
+          for BRANCH in $TARGET_BRANCHES; do
+            echo ""
+            echo "=== Checking $BRANCH branch ==="
+
+            # Fetch branch protection settings
+            PROTECTION=$(gh api repos/${{ github.repository }}/branches/$BRANCH/protection 2>/dev/null || echo "{}")
+
+            if [[ "$PROTECTION" == "{}" ]]; then
+              echo "❌ Branch '$BRANCH' has no protection rules configured."
+              exit 1
+            fi
+
+            # Check for required pull request reviews
+            if [[ $(echo "$PROTECTION" | jq '.required_pull_request_reviews') == "null" ]]; then
+              echo "❌ Missing pull request review requirement on '$BRANCH'"
+              exit 1
+            fi
+
+            # Check number of approvals required
+            APPROVALS=$(echo "$PROTECTION" | jq '.required_pull_request_reviews.required_approving_review_count')
+            if [[ "$APPROVALS" -lt 1 ]]; then
+              echo "❌ Expected at least 1 approving review for '$BRANCH', got $APPROVALS"
+              exit 1
+            fi
+
+            # Check required status checks
+            STATUS=$(echo "$PROTECTION" | jq -r '.required_status_checks.contexts[]?' | grep -F "$REQUIRED_STATUS" || true)
+            if [[ -z "$STATUS" ]]; then
+              echo "❌ Required status check '$REQUIRED_STATUS' missing on '$BRANCH'"
+              exit 1
+            fi
+
+            # Check force pushes
+            FORCE_PUSH=$(echo "$PROTECTION" | jq '.allow_force_pushes.enabled')
+            if [[ "$FORCE_PUSH" == "true" ]]; then
+              echo "❌ Force pushes are allowed on '$BRANCH'"
+              exit 1
+            fi
+
+            # Check deletions
+            ALLOW_DELETE=$(echo "$PROTECTION" | jq '.allow_deletions.enabled')
+            if [[ "$ALLOW_DELETE" == "true" ]]; then
+              echo "❌ Branch deletions are allowed on '$BRANCH'"
+              exit 1
+            fi
+
+            echo "✅ Branch '$BRANCH' meets protection policy."
+          done
+
+          echo ""
+          echo "🎉 All checked branches comply with branch protection standards."

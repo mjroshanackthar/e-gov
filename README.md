@@ -56,6 +56,15 @@ For detailed contributing guidelines, see [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ---
 
+### Branch Protection Rules
+
+- All work must go through Pull Requests.
+- Direct pushes to `master` and `development` are not allowed.
+- The CI pipeline (`CI - Ant Build & Checks`) must pass before merging.
+- At least one approving review is required.
+
+---
+
 ## Security
 
 Please refer to [SECURITY.md](./SECURITY.md) for information on how to report vulnerabilities and best practices for keeping your installation secure.

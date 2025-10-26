@@ -32,16 +32,14 @@ ant jar
 java -jar .\dist\e-gov_V1.0.jar
 ```
 
-<!-- Run tests before submitting:
+Run tests before submitting:
 ```bash
-npm test
-# or
-mvn test
-``` -->
+ant test
+```
 
----
+<!-- --- -->
 
-## 🧩 Commit Guidelines
+<!-- ## 🧩 Commit Guidelines -->
 
 <!-- We follow [Conventional Commits](https://www.conventionalcommits.org/).  
 Use clear and descriptive commit messages:
@@ -54,9 +52,18 @@ docs: update setup instructions in README
 
 ---
 
+### Branch Protection Rules
+
+- All work must go through Pull Requests.
+- Direct pushes to `master` and `development` are not allowed.
+- The CI pipeline (`CI - Ant Build & Checks`) must pass before merging.
+- At least one approving review is required.
+
+---
+
 ## 🧪 Pull Requests
 
-<!-- - Ensure all tests pass. -->
+- Ensure all tests pass.
 - Update relevant documentation.
 - Keep pull requests small and focused.
 - Reference any related issues (e.g. `Fixes #123`).
