@@ -1,0 +1,55 @@
+name: CI - Ant Build & Checks
+
+on:
+  push:
+    branches: [ main, development, task/1-configure-ci-cd-pipeline-ant-basic-checks-6f2rxmxmQVQ8C356 ]
+  pull_request:
+    branches: [ main, development ]
+
+jobs:
+  build:
+    name: Build and Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Cache Ant dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.ant
+          key: ${{ runner.os }}-ant-${{ hashFiles('**/build.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-ant-
+
+      - name: Build with Ant
+        run: ant -noinput -buildfile build.xml
+
+      - name: Run unit tests
+        run: ant test
+
+      - name: Run static analysis (Checkstyle)
+        run: |
+          if ant -p | grep -q checkstyle; then
+            ant checkstyle
+          else
+            echo "No 'checkstyle' target defined, skipping."
+          fi
+
+      - name: Archive build artifacts
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts
+          path: |
+            build/
+            dist/
+            target/
+            **/*.jar
