@@ -100,6 +100,18 @@ chmod +x .husky/commit-msg
 
 ---
 
+### 🔒 Automatic Secret Detection
+
+
+This repository uses [Gitleaks](https://github.com/zricethezav/gitleaks) to automatically scan commits and pull requests for sensitive secrets (API keys, tokens, passwords, etc.).
+
+
+- **Pull requests** will be blocked if secrets are detected.
+- Always store credentials in **GitHub secrets** and never commit them directly.
+- Review the `gitleaks-report.json` artifact if the workflow fails.
+
+---
+
 ### Branch Protection Rules
 
 - All work must go through Pull Requests.
