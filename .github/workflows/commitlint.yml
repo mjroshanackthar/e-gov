@@ -25,6 +25,12 @@ jobs:
         run: |
           npm install @commitlint/config-conventional @commitlint/cli
 
-      - name: Run commitlint on PR commits
+      - name: Run commitlint on new commits only
+        if: github.event_name == 'pull_request'
         run: |
-          npx commitlint --from=$(git rev-list --max-parents=0 HEAD) --to=HEAD
+          npx commitlint --from=${{ github.event.pull_request.base.sha }} --to=${{ github.event.pull_request.head.sha }}
+          
+      - name: Run commitlint since development
+        run: |
+          npx commitlint --from=origin/development --to=HEAD
+
