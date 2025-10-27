@@ -95,6 +95,9 @@ echo 'npx --no -- commitlint --edit "$1"' > .husky/commit-msg
 chmod +x .husky/commit-msg
 ```
 
+> 🆕 **Note:** Conventional Commits are enforced only for new commits after v1.0.0.  
+> Older commits may not follow the format.
+
 ---
 
 ### Branch Protection Rules
