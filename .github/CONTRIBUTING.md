@@ -37,18 +37,63 @@ Run tests before submitting:
 ant test
 ```
 
-<!-- --- -->
+---
 
-<!-- ## 🧩 Commit Guidelines -->
+## 🧩 Commit Guidelines
 
-<!-- We follow [Conventional Commits](https://www.conventionalcommits.org/).  
-Use clear and descriptive commit messages:
+### 🧱 Conventional Commits Guide
+
+This project follows the [Conventional Commits](https://www.conventionalcommits.org/) specification to ensure consistent, meaningful commit messages and automated changelog generation.
+
+---
+
+#### 💬 Commit Message Format
+
+Each commit message should follow this format:
 
 ```
-feat: add new API endpoint for user settings
-fix: correct null reference in login controller
-docs: update setup instructions in README
-``` -->
+<type>(<scope>): <description>
+```
+
+**Examples:**
+
+```
+feat(ui): add dark mode toggle
+fix(api): handle missing tokens
+chore(ci): update GitHub Actions versions
+```
+
+---
+
+### 🧩 Common Types
+
+| Type         | Description                                                   |
+|--------------|---------------------------------------------------------------|
+| **feat**     | A new feature                                                 |
+| **fix**      | A bug fix                                                     |
+| **docs**     | Documentation-only changes                                    |
+| **style**    | Code formatting, missing semicolons, etc.                     |
+| **refactor** | Code change that neither fixes a bug nor adds a feature       |
+| **perf**     | Code change that improves performance                         |
+| **test**     | Adding or correcting tests                                    |
+| **build**    | Changes that affect the build system or external dependencies |
+| **ci**       | Changes to CI/CD configuration files or scripts               |
+| **chore**    | Maintenance tasks, dependency updates, etc.                   |
+
+---
+
+### 🧠 Enforcing Conventional Commits
+
+### Local Enforcement
+
+Install Husky and Commitlint to check commit messages locally before pushing.
+
+```bash
+npm install --save-dev @commitlint/{config-conventional,cli} husky
+npx husky init
+echo 'npx --no -- commitlint --edit "$1"' > .husky/commit-msg
+chmod +x .husky/commit-msg
+```
 
 ---
 

@@ -1,0 +1,30 @@
+name: Lint Commits
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+      - development
+      - task/3-adopt-conventional-commits-6f2rxmxH9Cf4rQGc
+
+jobs:
+  commitlint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install commitlint
+        run: |
+          npm install @commitlint/config-conventional @commitlint/cli
+
+      - name: Run commitlint on PR commits
+        run: |
+          npx commitlint --from=$(git rev-list --max-parents=0 HEAD) --to=HEAD
