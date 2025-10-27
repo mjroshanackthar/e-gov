@@ -27,7 +27,7 @@ Welcome to the **e-Gov Desktop Application** project! This is a Java/Ant-based d
 ant jar
 
 # Run the application
-java -jar .\dist\e-gov_V1.0.jar
+java -jar .\dist\e-gov_V1.1.0.jar
 ```
 
 ---
