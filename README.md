@@ -1,94 +1,119 @@
 # e-Gov Desktop Application
 
-Welcome to the **e-Gov Desktop Application** project! This is a Java/Ant-based desktop app designed to provide government-related functionalities in a secure and user-friendly manner.
+[![Build Status](https://img.shields.io/github/actions/workflow/status/panagiotisbellias/e-gov/build.yml?label=CI)]()
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)]()
+[![Java](https://img.shields.io/badge/Java-17+-orange.svg)]()
+[![Ant](https://img.shields.io/badge/Build-Ant-green.svg)]()
 
----
+The **e-Gov Desktop Application** is a Java/Ant-based desktop system
+designed to deliver secure and modular government-related services.\
+This project aims to provide a stable, extensible foundation for
+e-Government workflows.
 
-## Features
+------------------------------------------------------------------------
 
-* Java-based desktop application
-* Built with Ant
-* Modular and extendable architecture
-* Secure handling of data and secrets
+## 🚀 Overview
 
----
+-   Java-based desktop application
+-   Built with Apache Ant
+-   Modular and extendable architecture
+-   Strong security practices (secret scanning, protected branches)
 
-## Installation & Setup
+------------------------------------------------------------------------
 
-### Prerequisites
+## 📦 Installation & Setup
 
-* Java JDK 11 or higher
-* Apache Ant
+### 1. Prerequisites
 
-### Build & Run
+#### Java Development Kit (JDK) 11+
 
-```bash
-# Build the project
+``` bash
+java -version
+```
+
+#### Apache Ant
+
+``` bash
+ant -version
+```
+
+### Environment Variables
+
+Variable      Description
+  ------------- ---------------------------------
+`JAVA_HOME`   Points to your JDK installation
+`PATH`        Includes `java` and `ant`
+
+------------------------------------------------------------------------
+
+## 📁 Project Structure
+
+    /github     → CI/CD workflows, issue templates, security
+    /src        → Application source code
+    /build      → Build output (temporary)
+    /dist       → Packaged JARs and distribution files
+
+------------------------------------------------------------------------
+
+## 🔨 Build & Run
+
+### Build the application
+
+``` bash
+ant clean
 ant jar
-
-# Run the application
-java -jar .\dist\e-gov_V1.1.0.jar
 ```
 
----
+### Run
 
-## Contributing
-
-We welcome contributions! Here’s how you can get started:
-
-1. **Fork** the repository.
-2. **Clone** your fork locally:
-
-```bash
-git clone https://github.com/<your-username>/<repo-name>.git
+``` bash
+java -jar ./dist/e-gov_V1.1.0.jar
 ```
 
-3. **Create a branch** for your changes:
+------------------------------------------------------------------------
 
-```bash
-git checkout -b feature/your-feature-name
+## 🧑‍💻 Development Workflow
+
+### Useful Ant commands
+
+``` bash
+ant clean
+ant compile
+ant jar
 ```
 
-4. Follow the development setup above.
-5. Submit a pull request for review.
+### Adding dependencies
 
-For detailed contributing guidelines, see [CONTRIBUTING.md](.github/CONTRIBUTING.md).
+Place `.jar` files into `/lib`.
 
----
+------------------------------------------------------------------------
 
-### 🔒 Automatic Secret Detection
+## 🤝 Contributing
 
+1.  Fork the repo
+2.  Clone locally
+3.  Create a feature branch
+4.  Make changes
+5.  Open a PR
 
-This repository uses [Gitleaks](https://github.com/zricethezav/gitleaks) to automatically scan commits and pull requests for sensitive secrets (API keys, tokens, passwords, etc.).
+------------------------------------------------------------------------
 
+## 🔒 Security
 
-- **Pull requests** will be blocked if secrets are detected.
-- Always store credentials in **GitHub secrets** and never commit them directly.
-- Review the `gitleaks-report.json` artifact if the workflow fails.
+### Branch Protection
 
----
+-   No direct pushes to `master`/`development`
+-   PR + review required
+-   CI must pass
 
-### Branch Protection Rules
+------------------------------------------------------------------------
 
-- All work must go through Pull Requests.
-- Direct pushes to `master` and `development` are not allowed.
-- The CI pipeline (`CI - Ant Build & Checks`) must pass before merging.
-- At least one approving review is required.
+## 📄 License
 
----
+Apache License 2.0 --- see **LICENSE**.
 
-## Security
+------------------------------------------------------------------------
 
-Please refer to [SECURITY.md](.github/SECURITY.md) for information on how to report vulnerabilities and best practices for keeping your installation secure.
+## 💬 Support
 
----
-
-## License
-
-This project is licensed under the Apache License. See [LICENSE](./LICENSE) for details.
-
----
-
-## Support & Contact
-
-If you have questions or need help, feel free to open a discussion or issue in the repository.
+Open an issue or discussion for help.
