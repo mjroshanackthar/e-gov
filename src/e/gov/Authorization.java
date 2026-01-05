@@ -23,6 +23,11 @@ public class Authorization extends Affirmation {
         this.authorizedPerson = authorizedPerson;
         this.authorizationReason = authorizationReason;
     }
+
+    public Authorization(AuthorizedPerson authorizedPerson, Affirmation affirmation) {
+        super(affirmation.getTaxIdentificationNumber(), affirmation.getCellPhoneNumber(), affirmation.getFullName(), affirmation.getIdentityCard(), affirmation.getDepositor(), affirmation.getStatementText(), affirmation.getUniqueCode());
+        this.authorizedPerson = authorizedPerson;
+    }
     
     public Authorization(){
         super();
@@ -42,6 +47,13 @@ public class Authorization extends Affirmation {
 
     public void setAuthorizationReason(String authorizationReason) {
         this.authorizationReason = authorizationReason;
+    }
+
+    public boolean isAuthorized() {
+        return authorizationReason != null && !authorizationReason.isEmpty() && authorizedPerson != null &&
+                authorizedPerson.getFullName() != null && !authorizedPerson.getFullName().isEmpty() &&
+                authorizedPerson.getIdentityCard() != null && !authorizedPerson.getIdentityCard().isEmpty() &&
+                authorizedPerson.getTaxIdentificationNumber() > 0;
     }
     
 }

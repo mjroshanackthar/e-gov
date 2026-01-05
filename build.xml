@@ -70,4 +70,29 @@
     nbproject/build-impl.xml file. 
 
     -->
+    <path id="test.classpath">
+        <pathelement location="build/classes"/>
+        <fileset dir="lib">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+    <target name="test" depends="compile">
+        <mkdir dir="build/test-classes"/>
+
+        <javac srcdir="test"
+               destdir="build/test-classes"
+               includeantruntime="false">
+            <classpath refid="test.classpath"/>
+        </javac>
+
+        <java classname="org.junit.platform.console.ConsoleLauncher"
+              fork="true"
+              failonerror="true">
+            <classpath>
+                <path refid="test.classpath"/>
+                <pathelement location="build/test-classes"/>
+            </classpath>
+            <arg value="--scan-classpath"/>
+        </java>
+    </target>
 </project>

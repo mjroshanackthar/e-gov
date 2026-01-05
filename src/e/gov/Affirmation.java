@@ -172,6 +172,10 @@ public class Affirmation {
         
     }
 
+    public boolean isValid() {
+        return fullName != null && fullName.length() > 12 && identityCard != null && identityCard.length() > 15 && uniqueCode > 0;
+    }
+
     @Override
     public String toString() {
         return "Document is created for " + getFullName() + "\n"
