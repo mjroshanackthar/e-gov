@@ -76,6 +76,17 @@
             <include name="**/*.jar"/>
         </fileset>
     </path>
+    <path id="checkstyle.classpath">
+        <fileset dir="lib/checkstyle">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+    <path id="pmd.classpath">
+        <fileset dir="lib/pmd">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
     <target name="test" depends="compile">
         <mkdir dir="build/test-classes"/>
 
@@ -93,6 +104,29 @@
                 <pathelement location="build/test-classes"/>
             </classpath>
             <arg value="--scan-classpath"/>
+        </java>
+    </target>
+    <target name="checkstyle">
+        <java classname="com.puppycrawl.tools.checkstyle.Main"
+              fork="true"
+              failonerror="true">
+            <classpath refid="checkstyle.classpath"/>
+            <arg value="-c"/>
+            <arg value="config/checkstyle/checkstyle.xml"/>
+            <arg value="src"/>
+        </java>
+    </target>
+    <target name="pmd">
+        <java classname="net.sourceforge.pmd.PMD"
+              fork="true"
+              failonerror="true">
+            <classpath refid="pmd.classpath"/>
+            <arg value="-d"/>
+            <arg value="src"/>
+            <arg value="-R"/>
+            <arg value="config/pmd/ruleset.xml"/>
+            <arg value="-f"/>
+            <arg value="text"/>
         </java>
     </target>
 </project>

@@ -6,6 +6,7 @@ import authorized.AuthorizedPerson;
  *
  * @author Panagiotis Bellias
  */
+@SuppressWarnings("PMD.DataClass")
 public class Authorization extends Affirmation {
     
     private AuthorizedPerson authorizedPerson = new AuthorizedPerson();
@@ -51,10 +52,13 @@ public class Authorization extends Affirmation {
     }
 
     public boolean isAuthorized() {
-        return authorizationReason != null && !authorizationReason.isEmpty() && authorizedPerson != null &&
-                authorizedPerson.getFullName() != null && !authorizedPerson.getFullName().isEmpty() &&
-                authorizedPerson.getIdentityCard() != null && !authorizedPerson.getIdentityCard().isEmpty() &&
-                authorizedPerson.getTaxIdentificationNumber() > 0;
+        return authorizationReason != null && !authorizationReason.isEmpty() &&
+                authorizedPerson != null &&
+                authorizedPerson.isValid();
+    }
+
+    public void createAndSetAuthorizedPerson() {
+        this.authorizedPerson = AuthorizedPerson.createOne();
     }
     
 }

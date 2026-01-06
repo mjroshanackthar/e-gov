@@ -1,15 +1,19 @@
 package authorized;
 
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Panagiotis Bellias
  */
 public class AuthorizedPerson {
+
+    private static final Logger LOG = Logger.getLogger(AuthorizedPerson.class.getName());
     
     private long taxIdentificationNumber;
-    private String fullName, identityCard;
+    private String fullName;
+    private String identityCard;
 
     public AuthorizedPerson(long taxIdentificationNumber, String fullName, String identityCard) {
         this.taxIdentificationNumber = taxIdentificationNumber;
@@ -45,19 +49,34 @@ public class AuthorizedPerson {
     }
     
     public static AuthorizedPerson createOne(){
-        
-        Scanner input = new Scanner(System.in);
-        AuthorizedPerson authorizedPerson = new AuthorizedPerson();
-        System.out.print("Please enter the tax identification number of the authorized person: ");
-        authorizedPerson.setTaxIdentificationNumber(input.nextLong());
-        System.out.print("Please enter the full name of the authorized person: ");
-        input = new Scanner(System.in);
-        authorizedPerson.setFullName(input.nextLine());
-        System.out.print("Please enter the identity card of the authorized person: ");
-        authorizedPerson.setIdentityCard(input.nextLine());
-        
+
+        AuthorizedPerson authorizedPerson;
+        try (Scanner input = new Scanner(System.in)) {
+            authorizedPerson = new AuthorizedPerson();
+            LOG.info("Please enter the tax identification number of the authorized person: ");
+            authorizedPerson.setTaxIdentificationNumber(input.nextLong());
+            LOG.info("Please enter the full name of the authorized person: ");
+            authorizedPerson.setFullName(input.nextLine());
+            LOG.info("Please enter the identity card of the authorized person: ");
+            authorizedPerson.setIdentityCard(input.nextLine());
+        }
+
         return authorizedPerson;
         
+    }
+
+    public boolean isValid() {
+        return fullName != null && !fullName.isEmpty() &&
+                identityCard != null && !identityCard.isEmpty() &&
+                taxIdentificationNumber > 0;
+    }
+
+    public String getDisplayName() {
+        return fullName + " (" + identityCard + ")";
+    }
+
+    public boolean matchesTaxId(long taxId) {
+        return taxIdentificationNumber == taxId;
     }
     
 }
