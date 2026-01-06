@@ -18,4 +18,25 @@ class AffirmationTest {
 
         assertFalse(affirmation.isValid());
     }
+
+    @Test
+    void givenEmptyStatement_whenValidating_thenReturnsFalse() {
+        Affirmation affirmation = new Affirmation(0, 0, "", "", "", "", 0);
+
+        assertFalse(affirmation.isValid());
+    }
+
+    @Test
+    void givenWhitespaceOnlyStatement_whenValidating_thenReturnsFalse() {
+        Affirmation affirmation = new Affirmation(0, 0, "   ", "   ", "   ", "   ", 0);
+
+        assertFalse(affirmation.isValid());
+    }
+
+    @Test
+    void givenNullStatement_whenValidating_thenReturnsFalse() {
+        Affirmation affirmation = new Affirmation(0, 0, null, null, null, null, 0);
+
+        assertFalse(affirmation.isValid());
+    }
 }

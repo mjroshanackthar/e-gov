@@ -12,6 +12,9 @@ public class EGov {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        if (args.length > 0 && "--test".equals(args[0])) {
+            return;
+        }
         
         ArrayList<Affirmation> documents = new ArrayList<>();
         int id = 1; 

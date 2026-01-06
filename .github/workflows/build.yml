@@ -2,13 +2,11 @@ name: CI - Ant Build & Checks
 
 on:
   push:
-    branches: [ main, development ]
+    branches: [ main, development, task/1-implement-initial-automated-tests-j-unit-6f2rxqwmm8753GCc ]
   pull_request:
-    branches: [ main, development ]
 
 jobs:
-  build:
-    name: Build and Test
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,6 +18,12 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
+
+      - name: Verify Java version
+        run: java -version
+
+      - name: Build project
+        run: ant compile
 
       - name: Cache Ant dependencies
         uses: actions/cache@v4

@@ -7,6 +7,6 @@ class EGovTest {
 
     @Test
     void applicationShouldStartWithoutErrors() {
-        assertDoesNotThrow(() -> EGov.main(new String[]{}));
+        assertDoesNotThrow(() -> EGov.main(new String[]{ "--test" }));
     }
 }

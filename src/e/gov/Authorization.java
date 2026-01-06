@@ -24,9 +24,10 @@ public class Authorization extends Affirmation {
         this.authorizationReason = authorizationReason;
     }
 
-    public Authorization(AuthorizedPerson authorizedPerson, Affirmation affirmation) {
+    public Authorization(AuthorizedPerson authorizedPerson, Affirmation affirmation, String authorizationReason) {
         super(affirmation.getTaxIdentificationNumber(), affirmation.getCellPhoneNumber(), affirmation.getFullName(), affirmation.getIdentityCard(), affirmation.getDepositor(), affirmation.getStatementText(), affirmation.getUniqueCode());
         this.authorizedPerson = authorizedPerson;
+        this.authorizationReason = authorizationReason;
     }
     
     public Authorization(){

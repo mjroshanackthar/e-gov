@@ -173,7 +173,7 @@ public class Affirmation {
     }
 
     public boolean isValid() {
-        return fullName != null && fullName.length() > 12 && identityCard != null && identityCard.length() > 15 && uniqueCode > 0;
+        return statementText != null && !statementText.trim().isEmpty();
     }
 
     @Override
