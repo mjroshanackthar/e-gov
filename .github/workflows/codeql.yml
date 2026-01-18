@@ -33,6 +33,9 @@ jobs:
         with:
           languages: java
 
+      - name: Copy Maven dependencies
+        run: mvn dependency:copy-dependencies -DoutputDirectory=lib
+
       - name: Build with Ant
         run: |
           ant -noinput -buildfile build.xml
