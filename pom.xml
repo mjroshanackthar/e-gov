@@ -1,0 +1,121 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="
+           http://maven.apache.org/POM/4.0.0
+           http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>gr.egov</groupId>
+    <artifactId>e-gov</artifactId>
+    <version>1.2.0</version>
+    <packaging>pom</packaging>
+
+    <name>e-gov</name>
+    <description>Dependency management for e-gov Ant-based build</description>
+
+    <!-- ===================== -->
+    <!-- Version management -->
+    <!-- ===================== -->
+    <properties>
+        <java.version>17</java.version>
+
+        <!-- Testing -->
+        <junit.platform.version>1.10.2</junit.platform.version>
+        <junit.jupiter.version>5.10.2</junit.jupiter.version>
+
+        <!-- Quality -->
+        <checkstyle.version>10.12.3</checkstyle.version>
+        <pmd.version>7.2.0</pmd.version>
+
+        <!-- Logging (example – adjust if already used) -->
+        <slf4j.version>2.0.13</slf4j.version>
+    </properties>
+
+    <!-- ===================== -->
+    <!-- Dependency Management -->
+    <!-- ===================== -->
+    <dependencyManagement>
+        <dependencies>
+
+            <!-- JUnit Platform Console -->
+            <dependency>
+                <groupId>org.junit.platform</groupId>
+                <artifactId>junit-platform-console-standalone</artifactId>
+                <version>${junit.platform.version}</version>
+            </dependency>
+
+            <!-- JUnit Jupiter (for test code) -->
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>${junit.jupiter.version}</version>
+            </dependency>
+
+            <!-- Checkstyle -->
+            <dependency>
+                <groupId>com.puppycrawl.tools</groupId>
+                <artifactId>checkstyle</artifactId>
+                <version>${checkstyle.version}</version>
+            </dependency>
+
+            <!-- PMD -->
+            <dependency>
+                <groupId>net.sourceforge.pmd</groupId>
+                <artifactId>pmd-core</artifactId>
+                <version>${pmd.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.sourceforge.pmd</groupId>
+                <artifactId>pmd-java</artifactId>
+                <version>${pmd.version}</version>
+            </dependency>
+
+            <!-- Optional logging -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <!-- ===================== -->
+    <!-- Actual dependencies -->
+    <!-- ===================== -->
+    <dependencies>
+
+        <!-- Test runtime -->
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-console-standalone</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Code quality -->
+        <dependency>
+            <groupId>com.puppycrawl.tools</groupId>
+            <artifactId>checkstyle</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>net.sourceforge.pmd</groupId>
+            <artifactId>pmd-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>net.sourceforge.pmd</groupId>
+            <artifactId>pmd-java</artifactId>
+        </dependency>
+
+    </dependencies>
+
+</project>

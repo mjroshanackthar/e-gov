@@ -70,24 +70,47 @@
     nbproject/build-impl.xml file. 
 
     -->
-    <path id="test.classpath">
-        <pathelement location="build/classes"/>
-        <fileset dir="lib">
-            <include name="**/*.jar"/>
-        </fileset>
-    </path>
-    <path id="checkstyle.classpath">
-        <fileset dir="lib/checkstyle">
-            <include name="*.jar"/>
-        </fileset>
-    </path>
-    <path id="pmd.classpath">
-        <fileset dir="lib/pmd">
-            <include name="**/*.jar"/>
-        </fileset>
+    <!-- ===================== -->
+    <!-- Maven dependency setup -->
+    <!-- ===================== -->
+
+    <property name="lib.dir" value="lib"/>
+    <property name="build.dir" value="build"/>
+
+    <taskdef resource="org/apache/maven/artifact/ant/antlib.xml"
+             classpath="tools/maven-ant-tasks.jar"/>
+
+    <target name="resolve-deps">
+        <mkdir dir="${lib.dir}"/>
+
+        <artifact:dependencies
+                filesetId="maven.deps">
+            <pom file="pom.xml"/>
+        </artifact:dependencies>
+
+        <copy todir="${lib.dir}">
+            <fileset refid="maven.deps"/>
+        </copy>
+    </target>
+
+    <!-- ===================== -->
+    <!-- Classpaths -->
+    <!-- ===================== -->
+
+    <path id="main.classpath">
+        <fileset dir="${lib.dir}" includes="**/*.jar"/>
     </path>
 
-    <target name="test" depends="compile">
+    <path id="test.classpath">
+        <pathelement location="build/classes"/>
+        <path refid="main.classpath"/>
+    </path>
+
+    <!-- ===================== -->
+    <!-- Tests -->
+    <!-- ===================== -->
+
+    <target name="test" depends="compile,resolve-deps">
         <mkdir dir="build/test-classes"/>
 
         <javac srcdir="test"
@@ -106,21 +129,31 @@
             <arg value="--scan-classpath"/>
         </java>
     </target>
-    <target name="checkstyle">
+
+    <!-- ===================== -->
+    <!-- Checkstyle -->
+    <!-- ===================== -->
+
+    <target name="checkstyle" depends="resolve-deps">
         <java classname="com.puppycrawl.tools.checkstyle.Main"
               fork="true"
               failonerror="true">
-            <classpath refid="checkstyle.classpath"/>
+            <classpath refid="main.classpath"/>
             <arg value="-c"/>
             <arg value="config/checkstyle/checkstyle.xml"/>
             <arg value="src"/>
         </java>
     </target>
-    <target name="pmd">
+
+    <!-- ===================== -->
+    <!-- PMD -->
+    <!-- ===================== -->
+
+    <target name="pmd" depends="resolve-deps">
         <java classname="net.sourceforge.pmd.PMD"
               fork="true"
               failonerror="true">
-            <classpath refid="pmd.classpath"/>
+            <classpath refid="main.classpath"/>
             <arg value="-d"/>
             <arg value="src"/>
             <arg value="-R"/>

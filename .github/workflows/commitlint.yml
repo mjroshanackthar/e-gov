@@ -6,7 +6,7 @@ on:
     branches:
       - master
       - development
-      - task/3-adopt-conventional-commits-6f2rxmxH9Cf4rQGc
+      - task/3-configure-dependabot-sast-code-ql-6f2rxqvrMgCvvM76
 
 jobs:
   commitlint:
