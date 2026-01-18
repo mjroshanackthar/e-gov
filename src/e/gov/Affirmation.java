@@ -112,7 +112,8 @@ public class Affirmation {
 
             LOG.info("Please enter the depositor: ");
             String depositor = input.nextLine();
-            while (!new Affirmation().isDepositorValid(depositor)) {
+            Affirmation validator = new Affirmation();
+            while (!validator.isDepositorValid(depositor)) {
                 LOG.info("Too long name for depositor. Try again...");
                 depositor = input.nextLine();
             }
@@ -168,6 +169,7 @@ public class Affirmation {
         return statementText != null && statementText.length() <= 15;
     }
 
+    @SuppressWarnings("PMD.LawOfDemeter")
     public static List<Affirmation> searching(List<Affirmation> documents){
         
         LOG.info("Enter your unique document code: ");
@@ -191,6 +193,7 @@ public class Affirmation {
         return this.uniqueCode == id;
     }
 
+    @SuppressWarnings("PMD.LawOfDemeter")
     public static void docResults(List<Affirmation> results){
         
         Iterator<Affirmation> res = results.iterator();
@@ -206,10 +209,15 @@ public class Affirmation {
         
     }
 
-    public boolean isValid() {
-        return statementText != null && !statementText.trim().isEmpty();
+    private boolean hasValidStatementText() {
+        return statementText != null && !statementText.isEmpty();
     }
 
+    public boolean isValid() {
+        return hasValidStatementText();
+    }
+
+    @SuppressWarnings("PMD.LawOfDemeter")
     public String getDocumentKind() {
         return this.getClass().getSimpleName();
     }

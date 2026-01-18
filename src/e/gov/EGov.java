@@ -19,6 +19,7 @@ public final class EGov {
     /**
      * @param args the command line arguments
      */
+    @SuppressWarnings("PMD.LawOfDemeter")
     public static void main(String[] args) {
         if (args.length > 0 && TEST_MODE.equals(args[0])) {
             return;
