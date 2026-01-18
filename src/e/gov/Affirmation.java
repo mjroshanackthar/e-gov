@@ -210,7 +210,7 @@ public class Affirmation {
     }
 
     private boolean hasValidStatementText() {
-        return statementText != null && !statementText.isEmpty();
+        return statementText != null && !statementText.trim().isEmpty();
     }
 
     public boolean isValid() {
