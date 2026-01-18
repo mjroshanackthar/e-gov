@@ -77,16 +77,14 @@
     <property name="lib.dir" value="lib"/>
     <property name="build.dir" value="build"/>
 
-    <taskdef resource="org/apache/maven/artifact/ant/antlib.xml"
-             classpath="tools/maven-ant-tasks.jar"/>
+    <taskdef uri="antlib:org.apache.maven.artifact.ant"
+             resource="org/apache/maven/artifact/ant/antlib.xml"
+             classpath="tools/maven-ant-tasks-2.1.3.jar"/>
 
     <target name="resolve-deps">
         <mkdir dir="${lib.dir}"/>
 
-        <artifact:dependencies
-                filesetId="maven.deps">
-            <pom file="pom.xml"/>
-        </artifact:dependencies>
+        <antlib:dependencies filesetId="maven.deps" pomFile="pom.xml"/>
 
         <copy todir="${lib.dir}">
             <fileset refid="maven.deps"/>
