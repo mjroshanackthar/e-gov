@@ -77,18 +77,16 @@
     <property name="lib.dir" value="lib"/>
     <property name="build.dir" value="build"/>
 
-    <taskdef uri="antlib:org.apache.maven.artifact.ant"
-             resource="org/apache/maven/artifact/ant/antlib.xml"
+    <taskdef name="mvn-deps"
+             classname="org.apache.maven.artifact.ant.DependenciesTask"
              classpath="tools/maven-ant-tasks-2.1.3.jar"/>
 
     <target name="resolve-deps">
         <mkdir dir="${lib.dir}"/>
 
-        <antlib:dependencies filesetId="maven.deps" pomFile="pom.xml"/>
+        <mvn-deps destdir="${lib.dir}" pomfile="pom.xml"/>
 
-        <copy todir="${lib.dir}">
-            <fileset refid="maven.deps"/>
-        </copy>
+        <echo message="Maven dependencies copied to ${lib.dir}"/>
     </target>
 
     <!-- ===================== -->
