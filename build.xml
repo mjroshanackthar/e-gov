@@ -77,18 +77,6 @@
     <property name="lib.dir" value="lib"/>
     <property name="build.dir" value="build"/>
 
-    <taskdef name="mvn-deps"
-             classname="org.apache.maven.artifact.ant.DependenciesTask"
-             classpath="tools/maven-ant-tasks-2.1.3.jar"/>
-
-    <target name="resolve-deps">
-        <mkdir dir="${lib.dir}"/>
-
-        <mvn-deps destdir="${lib.dir}" pomfile="pom.xml"/>
-
-        <echo message="Maven dependencies copied to ${lib.dir}"/>
-    </target>
-
     <!-- ===================== -->
     <!-- Classpaths -->
     <!-- ===================== -->
@@ -106,7 +94,7 @@
     <!-- Tests -->
     <!-- ===================== -->
 
-    <target name="test" depends="compile,resolve-deps">
+    <target name="test" depends="compile">
         <mkdir dir="build/test-classes"/>
 
         <javac srcdir="test"
@@ -130,7 +118,7 @@
     <!-- Checkstyle -->
     <!-- ===================== -->
 
-    <target name="checkstyle" depends="resolve-deps">
+    <target name="checkstyle">
         <java classname="com.puppycrawl.tools.checkstyle.Main"
               fork="true"
               failonerror="true">
@@ -145,7 +133,7 @@
     <!-- PMD -->
     <!-- ===================== -->
 
-    <target name="pmd" depends="resolve-deps">
+    <target name="pmd">
         <java classname="net.sourceforge.pmd.PMD"
               fork="true"
               failonerror="true">

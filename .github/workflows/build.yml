@@ -23,9 +23,9 @@ jobs:
         run: java -version
 
       - name: Copy Maven dependencies
-        run: mvn dependency:copy-dependencies -DoutputDirectory=lib
+        run: mvn -B dependency:copy-dependencies -DoutputDirectory=lib
 
-      - name: Build project
+      - name: Build with Ant
         run: ant compile
 
       - name: Cache Ant dependencies

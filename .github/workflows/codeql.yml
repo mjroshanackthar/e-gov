@@ -34,7 +34,7 @@ jobs:
           languages: java
 
       - name: Copy Maven dependencies
-        run: mvn dependency:copy-dependencies -DoutputDirectory=lib
+        run: mvn -B dependency:copy-dependencies -DoutputDirectory=lib
 
       - name: Build with Ant
         run: |
