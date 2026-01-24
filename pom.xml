@@ -19,6 +19,8 @@
     <!-- ===================== -->
     <properties>
         <java.version>17</java.version>
+        <project.build.sourceDirectory>src</project.build.sourceDirectory>
+        <project.build.testSourceDirectory>test</project.build.testSourceDirectory>
 
         <!-- Testing -->
         <junit.platform.version>1.10.2</junit.platform.version>
@@ -59,19 +61,6 @@
                 <version>${checkstyle.version}</version>
             </dependency>
 
-            <!-- PMD -->
-            <dependency>
-                <groupId>net.sourceforge.pmd</groupId>
-                <artifactId>pmd-core</artifactId>
-                <version>${pmd.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>net.sourceforge.pmd</groupId>
-                <artifactId>pmd-java</artifactId>
-                <version>${pmd.version}</version>
-            </dependency>
-
             <!-- Optional logging -->
             <dependency>
                 <groupId>org.slf4j</groupId>
@@ -106,14 +95,19 @@
             <artifactId>checkstyle</artifactId>
         </dependency>
 
+        <!-- PMD -->
         <dependency>
             <groupId>net.sourceforge.pmd</groupId>
             <artifactId>pmd-core</artifactId>
+            <version>${pmd.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>net.sourceforge.pmd</groupId>
             <artifactId>pmd-java</artifactId>
+            <version>${pmd.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
     </dependencies>

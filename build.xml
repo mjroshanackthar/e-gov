@@ -114,11 +114,9 @@
         </java>
     </target>
 
-    <!-- ===================== -->
-    <!-- Checkstyle -->
-    <!-- ===================== -->
-
-    <target name="checkstyle">
+    <!-- Combined code quality target -->
+    <target name="quality" depends="compile">
+        <!-- Checkstyle -->
         <java classname="com.puppycrawl.tools.checkstyle.Main"
               fork="true"
               failonerror="true">
@@ -127,13 +125,8 @@
             <arg value="config/checkstyle/checkstyle.xml"/>
             <arg value="src"/>
         </java>
-    </target>
 
-    <!-- ===================== -->
-    <!-- PMD -->
-    <!-- ===================== -->
-
-    <target name="pmd">
+        <!-- PMD -->
         <java classname="net.sourceforge.pmd.PMD"
               fork="true"
               failonerror="true">

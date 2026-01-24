@@ -37,6 +37,22 @@ java -version
 ant -version
 ```
 
+#### Node.js & npm (Optional for Git hooks & versioning)
+
+Some development tasks (commit hooks, release versioning) require Node.js and npm.
+```bash
+node -v
+npm -v
+```
+
+- Node.js ≥ 18
+- npm (comes bundled with Node.js)
+
+#### Install Node dependencies
+```bash
+npm install
+```
+
 ### Environment Variables
 
 Variable      Description
@@ -68,6 +84,15 @@ ant jar
 
 ``` bash
 java -jar ./dist/e-gov_V1.2.0.jar
+```
+
+### Node/npm related tasks (Optional)
+
+- Git hooks are managed via Husky
+- Release versioning & changelog via standard-version
+
+```bash
+npm run release
 ```
 
 ------------------------------------------------------------------------
