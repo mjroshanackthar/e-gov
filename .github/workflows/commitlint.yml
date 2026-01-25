@@ -6,7 +6,7 @@ on:
     branches:
       - master
       - development
-      - task/3-configure-dependabot-sast-code-ql-6f2rxqvrMgCvvM76
+      - task/4-review-projects-repos-structure-6fJrmfFmfwffQfrc
 
 jobs:
   commitlint:

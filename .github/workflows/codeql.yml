@@ -2,9 +2,9 @@ name: CodeQL
 
 on:
   push:
-    branches: [ "master", "development", "task/3-configure-dependabot-sast-code-ql-6f2rxqvrMgCvvM76" ]
+    branches: [ "master", "development", "task/4-review-projects-repos-structure-6fJrmfFmfwffQfrc" ]
   pull_request:
-    branches: [ "master", "development", "task/3-configure-dependabot-sast-code-ql-6f2rxqvrMgCvvM76" ]
+    branches: [ "master", "development", "task/4-review-projects-repos-structure-6fJrmfFmfwffQfrc" ]
   schedule:
     - cron: '0 3 * * 1' # Weekly scan
 
