@@ -1,14 +1,36 @@
+name: Generate SBOM
+
+# Trigger the workflow on pushes to main/development and on pull requests
+on:
+  push:
+    branches:
+      - main
+      - development
+      - task/4-optional-add-sbom-6f2rxvJHHWPvRMf6
+  pull_request:
+    branches:
+      - main
+      - development
+      - task/4-optional-add-sbom-6f2rxvJHHWPvRMf6
+
 jobs:
-  sbom:
+  generate-sbom:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
-      - name: Install Syft
-        run: curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh
-      - name: Generate SBOM
-        run: syft . -o cyclonedx-json > sbom/sbom.json
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Generate SBOM via CycloneDX Maven Plugin
+        run: mvn org.cyclonedx:cyclonedx-maven-plugin:makeAggregateBom
+
       - name: Upload SBOM artifact
         uses: actions/upload-artifact@v3
         with:
           name: sbom
-          path: sbom/sbom.json
+          path: target/bom.xml
