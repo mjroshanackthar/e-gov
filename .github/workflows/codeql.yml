@@ -2,9 +2,9 @@ name: CodeQL
 
 on:
   push:
-    branches: [ "master", "development", "task/4-review-projects-repos-structure-6fJrmfFmfwffQfrc" ]
+    branches: [ "master", "development", "task/align-j-unit-platform-dependencies-after-dependabot-upgrade-6fqcFVFFWcQCxPvc" ]
   pull_request:
-    branches: [ "master", "development", "task/4-review-projects-repos-structure-6fJrmfFmfwffQfrc" ]
+    branches: [ "master", "development", "task/align-j-unit-platform-dependencies-after-dependabot-upgrade-6fqcFVFFWcQCxPvc" ]
   schedule:
     - cron: '0 3 * * 1' # Weekly scan
 

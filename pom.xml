@@ -24,7 +24,6 @@
 
         <!-- Testing -->
         <junit.platform.version>1.10.2</junit.platform.version>
-        <junit.jupiter.version>5.10.2</junit.jupiter.version>
 
         <!-- Quality -->
         <checkstyle.version>10.12.3</checkstyle.version>
@@ -45,13 +44,6 @@
                 <groupId>org.junit.platform</groupId>
                 <artifactId>junit-platform-console-standalone</artifactId>
                 <version>${junit.platform.version}</version>
-            </dependency>
-
-            <!-- JUnit Jupiter (for test code) -->
-            <dependency>
-                <groupId>org.junit.jupiter</groupId>
-                <artifactId>junit-jupiter</artifactId>
-                <version>${junit.jupiter.version}</version>
             </dependency>
 
             <!-- Checkstyle -->
@@ -80,12 +72,6 @@
         <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-console-standalone</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
 
