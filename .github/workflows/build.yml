@@ -29,7 +29,7 @@ jobs:
         run: ant compile
 
       - name: Cache Ant dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.ant
           key: ${{ runner.os }}-ant-${{ hashFiles('**/build.xml') }}
