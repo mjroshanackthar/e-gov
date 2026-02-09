@@ -110,7 +110,8 @@
                 <path refid="test.classpath"/>
                 <pathelement location="build/test-classes"/>
             </classpath>
-            <arg value="--scan-classpath"/>
+            <arg value="execute"/>
+            <arg value="--scan-class-path"/>
         </java>
     </target>
 
