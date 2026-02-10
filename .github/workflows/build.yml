@@ -2,7 +2,7 @@ name: CI - Ant Build & Checks
 
 on:
   push:
-    branches: [ main, development, task/align-j-unit-platform-dependencies-after-dependabot-upgrade-6fqcFVFFWcQCxPvc ]
+    branches: [ master, development ]
   pull_request:
 
 jobs:

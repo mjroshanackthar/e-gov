@@ -1,17 +1,15 @@
 name: Generate SBOM
 
-# Trigger the workflow on pushes to main/development and on pull requests
+# Trigger the workflow on pushes to master/development and on pull requests
 on:
   push:
     branches:
-      - main
+      - master
       - development
-      - task/4-optional-add-sbom-6f2rxvJHHWPvRMf6
   pull_request:
     branches:
-      - main
+      - master
       - development
-      - task/4-optional-add-sbom-6f2rxvJHHWPvRMf6
 
 jobs:
   generate-sbom:
