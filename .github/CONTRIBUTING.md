@@ -139,6 +139,25 @@ If you find a bug or have a feature request:
 
 ---
 
+## 🌱 Good First Issues
+
+Issues labeled `good first issue` are beginner-friendly tasks designed for new contributors.
+
+They typically involve:
+- Documentation improvements
+- Adding or improving tests
+- Fixing lint or static analysis warnings
+- Small refactors with clear scope
+
+Each good first issue includes:
+- Clear steps to follow
+- Expected outcome
+- Pointers to relevant files or documentation
+
+If you’re new to the project, start there!
+
+---
+
 ## 💬 Questions or Help
 
 If you have questions, feel free to:

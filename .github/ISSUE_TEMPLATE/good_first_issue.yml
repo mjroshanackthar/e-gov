@@ -1,0 +1,40 @@
+name: Good First Issue
+description: Beginner-friendly task with clear scope
+labels: ["good first issue"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for contributing! This issue is designed for first-time contributors.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What is the problem and why does it matter?
+    validations:
+      required: true
+
+  - type: textarea
+    id: tasks
+    attributes:
+      label: What needs to be done
+      value: |
+        - [ ] Step 1
+        - [ ] Step 2
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected outcome
+      description: What should be true when this issue is done?
+    validations:
+      required: true
+
+  - type: textarea
+    id: pointers
+    attributes:
+      label: Helpful pointers
+      description: Files, classes, links, or hints
