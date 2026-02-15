@@ -3,27 +3,41 @@
     <description>Builds, tests, and runs the project e-gov V2.1.0.</description>
     <import file="nbproject/build-impl.xml"/>
 
+    <!-- ===================== -->
+    <!-- Project properties -->
+    <!-- ===================== -->
     <property name="lib.dir" value="lib"/>
     <property name="build.dir" value="build"/>
 
+    <!-- ===================== -->
+    <!-- Classpath definitions -->
+    <!-- ===================== -->
+    <!-- Main classpath for application dependencies -->
     <path id="main.classpath">
         <fileset dir="lib" includes="**/*.jar"/>
     </path>
 
+    <!-- Test classpath includes compiled classes and main dependencies -->
     <path id="test.classpath">
         <pathelement location="build/classes"/>
         <path refid="main.classpath"/>
     </path>
 
+    <!-- ===================== -->
+    <!-- Test targets -->
+    <!-- ===================== -->
     <target name="test" depends="compile">
+        <!-- Create test output directory -->
         <mkdir dir="build/test-classes"/>
 
+        <!-- Compile test sources -->
         <javac srcdir="test"
                destdir="build/test-classes"
                includeantruntime="false">
             <classpath refid="test.classpath"/>
         </javac>
 
+        <!-- Run JUnit Platform tests -->
         <java classname="org.junit.platform.console.ConsoleLauncher"
               fork="true"
               failonerror="true">
@@ -36,7 +50,11 @@
         </java>
     </target>
 
+    <!-- ===================== -->
+    <!-- Code quality targets -->
+    <!-- ===================== -->
     <target name="checkstyle" depends="compile">
+        <!-- Run Checkstyle static analysis -->
         <java classname="com.puppycrawl.tools.checkstyle.Main"
               fork="true"
               failonerror="true">
@@ -48,28 +66,35 @@
     </target>
 
     <target name="pmd" depends="compile">
-    <path id="pmd.lib.path">
-        <fileset dir="lib">
-            <include name="pmd-core-*.jar"/>
-            <include name="pmd-java-*.jar"/>
-            <include name="jaxen-*.jar"/>
-            <include name="asm-*.jar"/>
-            <include name="ant-*.jar"/>
-        </fileset>
-    </path>
-    
-    <taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask">
-        <classpath refid="pmd.lib.path"/>
-    </taskdef>
-    
-    <pmd rulesetfiles="config/pmd/ruleset.xml" 
-         failOnRuleViolation="false">
-        <formatter type="text" toConsole="true"/>
-        <fileset dir="src">
-            <include name="**/*.java"/>
-        </fileset>
-    </pmd>
-</target>
+        <!-- Define PMD library classpath -->
+        <path id="pmd.lib.path">
+            <fileset dir="lib">
+                <include name="pmd-core-*.jar"/>
+                <include name="pmd-java-*.jar"/>
+                <include name="jaxen-*.jar"/>
+                <include name="asm-*.jar"/>
+                <include name="ant-*.jar"/>
+            </fileset>
+        </path>
+        
+        <!-- Define PMD Ant task -->
+        <taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask">
+            <classpath refid="pmd.lib.path"/>
+        </taskdef>
+        
+        <!-- Run PMD analysis on source code -->
+        <pmd rulesetfiles="config/pmd/ruleset.xml" 
+             failOnRuleViolation="false">
+            <formatter type="text" toConsole="true"/>
+            <fileset dir="src">
+                <include name="**/*.java"/>
+            </fileset>
+        </pmd>
+    </target>
 
+    <!-- ===================== -->
+    <!-- Composite targets -->
+    <!-- ===================== -->
+    <!-- Run all code quality checks -->
     <target name="quality" depends="checkstyle,pmd"/>
 </project>

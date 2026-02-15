@@ -18,9 +18,6 @@ public class Affirmation implements java.io.Serializable {
     private static final int DEPOSIT_REASON = 2;
     private static final String NO_RESPONSE = "NO";
 
-
-
-
     private long taxIdentificationNumber;
     private long cellPhoneNumber;
     private String fullName;
@@ -132,31 +129,32 @@ public class Affirmation implements java.io.Serializable {
         if (NO_RESPONSE.equalsIgnoreCase(authorizationDoc)) {
             return new Affirmation(taxIdentificationNumberValue, cellPhoneNumberValue, fullNameValue, identityCardValue,
                     depositorValue, statementTextValue, id);
-        } else {
-            Authorization authorization = new Authorization(taxIdentificationNumberValue, cellPhoneNumberValue, fullNameValue,
-                    identityCardValue, depositorValue, statementTextValue, id);
-            authorization.createAndSetAuthorizedPerson(input);
-            LOG.info("Please enter the reason of authorization: \n"
-                    + "1 for receipt, \n"
-                    + "2 for deposit or \n"
-                    + "3 for signature");
-            int reasonCode = input.nextInt();
-            input.nextLine();
-            String reason;
-            switch (reasonCode) {
-                case RECEIPT_REASON:
-                    reason = "Receipt";
-                    break;
-                case DEPOSIT_REASON:
-                    reason = "Deposit";
-                    break;
-                default:
-                    reason = "Signature";
-                    break;
-            }
-            authorization.setAuthorizationReason(reason);
-            return authorization;
         }
+
+        // Create authorization for non-NO responses
+        Authorization authorization = new Authorization(taxIdentificationNumberValue, cellPhoneNumberValue, fullNameValue,
+                identityCardValue, depositorValue, statementTextValue, id);
+        authorization.createAndSetAuthorizedPerson(input);
+        LOG.info("Please enter the reason of authorization: \n"
+                + "1 for receipt, \n"
+                + "2 for deposit or \n"
+                + "3 for signature");
+        int reasonCode = input.nextInt();
+        input.nextLine();
+        String reason;
+        switch (reasonCode) {
+            case RECEIPT_REASON:
+                reason = "Receipt";
+                break;
+            case DEPOSIT_REASON:
+                reason = "Deposit";
+                break;
+            default:
+                reason = "Signature";
+                break;
+        }
+        authorization.setAuthorizationReason(reason);
+        return authorization;
 
     }
 
