@@ -4,10 +4,11 @@
 
 We only provide security updates for actively maintained versions of the project.
 
-| Version | Supported       |
-|---------|-----------------|
-| main    | ✅ Supported     |
-| <older> | ❌ Not supported |
+| Version     | Supported       |
+|-------------|-----------------|
+| master      | ✅ Supported     |
+| development | ✅ Supported     |
+| <older>     | ❌ Not supported |
 
 ---
 
