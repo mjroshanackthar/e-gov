@@ -21,3 +21,6 @@ Thumbs.db
 
 # Logs
 *.log
+
+# PMD report
+pmd-report.html
